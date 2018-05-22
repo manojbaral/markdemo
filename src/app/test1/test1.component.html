@@ -1,6 +1,12 @@
-<ko-stage #stage [config]="configStage" id="canvas" (mousedown)="drawingOn()" (mouseup)="drawingOff()">
+<!-- <ko-stage #stage [config]="configStage" id="canvas" (mousedown)="drawingOn()" (mouseup)="drawingOff()">
       <ko-layer #layer style="border: 1px solid red;">
         <ko-rect #rect1 [config]="configRect" ></ko-rect>
+      </ko-layer>
+    </ko-stage> -->
+
+    <ko-stage #stage [config]="configStage" id="canvas" (mousedown)="drawingOn()" (mouseup)="drawingOff()">
+      <ko-layer #layer style="border: 1px solid red;">
+        <ko-rect #rect *ngFor="let item of rectConfigList; let i = index; let l = last" [config]="item" ></ko-rect>
       </ko-layer>
     </ko-stage>
 <br>
