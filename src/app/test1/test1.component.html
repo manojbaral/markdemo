@@ -1,0 +1,8 @@
+<ko-stage #stage [config]="configStage" id="canvas" (mousedown)="drawingOn()" (mouseup)="drawingOff()">
+      <ko-layer #layer style="border: 1px solid red;">
+        <ko-rect #rect1 [config]="configRect" ></ko-rect>
+      </ko-layer>
+    </ko-stage>
+<br>
+<p>X : {{mouseX}}, Y : {{mouseY}}</p>
+<p>StartX : {{startX}}, StartY : {{startY}}, EndX : {{endX}}, EndY : {{endY}}</p>
