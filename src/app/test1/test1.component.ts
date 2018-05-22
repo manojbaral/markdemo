@@ -12,8 +12,11 @@ export class Test1Component implements OnInit {
   // @ViewChild('rect1') rect1: KonvaComponent;
   @ViewChild('layer') layer: KonvaComponent;
   @ViewChild('stage') stage: KonvaComponent;
-
   @ViewChildren('rect') rectList: QueryList<KonvaComponent>;
+
+  @ViewChild('image') image: KonvaComponent;
+  @ViewChild('imageLayer') imageLayer: KonvaComponent;
+
 
 
   private index: number=0;
@@ -31,8 +34,9 @@ export class Test1Component implements OnInit {
 
 
   public configStage = of({
-      width: 800,
-      height: 400
+    container: 'canvas',
+      width: 1137,
+      height: 707
     });
 
    public configRect = of({
@@ -45,11 +49,15 @@ export class Test1Component implements OnInit {
       strokeWidth: 1
     }); 
 
-  constructor(private cd: ChangeDetectorRef) { }
+   public imageConfig 
+
+  constructor(private cd: ChangeDetectorRef, private elRef:ElementRef) { }
 
   refresh() {
     this.cd.detectChanges();
   }
+
+
 
   drawingOn(){
     console.log(this.rectList);
@@ -63,14 +71,16 @@ export class Test1Component implements OnInit {
     this.currentRect.y(this.startY);
     this.timer = interval(10).subscribe(x => {
       this.dragging();
-      this.layer.getStage().draw();
+      // this.layer.getStage().batchDraw();
+      this.currentRect.getStage().draw();
       // console.log("test");
+
     });
   }
 
   dragging() {
-    this.currentRect.width(this.mouseX - this.startX);
-    this.currentRect.height(this.mouseY- this.startY);
+      this.currentRect.width(this.mouseX - this.startX);
+      this.currentRect.height(this.mouseY- this.startY);
   }
 
   drawingOff(){
@@ -79,7 +89,9 @@ export class Test1Component implements OnInit {
     this.endX = this.mouseX;
     this.endY = this.mouseY;
     this.redrawShape();
-    this.layer.getStage().draw();
+    // this.layer.getStage().batchDraw();
+    this.currentRect.getStage().draw();
+
     this.index+=1;
   }
 
@@ -89,6 +101,8 @@ export class Test1Component implements OnInit {
     this.currentRect.width(this.endX - this.startX);
     this.currentRect.height(this.endY - this.startY);
   }
+
+
 
   // public handleClick(component) {
   //   console.log('Hello Circle', component);
@@ -110,10 +124,27 @@ export class Test1Component implements OnInit {
           width: 0,
           height: 0,
           fill: 'transparent',
-          stroke: 'black',
+          stroke: 'red',
           strokeWidth: 1
         })
       );
     }
-	 }
+
+    // console.log(this.image.nativeElement.offsetLeft);
+    // console.log(this.image.nativeElement.offsetTop);
+    // console.log(this.image.nativeElement.offsetWidth);
+    // console.log(this.image.nativeElement.offsetHeight);
+
+    let imageObj = new Image();
+    imageObj.src = '../../assets/images/coolcat.jpg';
+
+    this.imageConfig = of({
+        x: 50,
+        y: 50,
+        image: imageObj,
+        width: 1137,
+        height: 707
+    });
+	}
+
 }

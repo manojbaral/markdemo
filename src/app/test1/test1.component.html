@@ -4,8 +4,15 @@
       </ko-layer>
     </ko-stage> -->
 
+   <!--  <div id="image-div" style="border:1px solid red; text-align: center;">
+    	<img #image id="image1" src="assets/images/coolcat.jpg" >
+	</div> -->
+
     <ko-stage #stage [config]="configStage" id="canvas" (mousedown)="drawingOn()" (mouseup)="drawingOff()">
-      <ko-layer #layer style="border: 1px solid red;">
+    	<ko-layer #imageLayer>
+    		<ko-image #image [config]="imageConfig"></ko-image>
+    	</ko-layer>
+      <ko-layer #layer >
         <ko-rect #rect *ngFor="let item of rectConfigList; let i = index; let l = last" [config]="item" ></ko-rect>
       </ko-layer>
     </ko-stage>
